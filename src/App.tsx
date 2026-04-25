@@ -53,7 +53,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 flex items-center">
-            <img src="/public1/img/QSI_LOGO.png" alt="QSI Logo" className="h-12 w-auto" referrerPolicy="no-referrer" />
+            <img src="/img/QSI_LOGO.png" alt="QSI Logo" className="h-12 w-auto" referrerPolicy="no-referrer" />
           </div>
           
           <div className="hidden md:block">
@@ -131,7 +131,7 @@ const Hero = () => {
           <motion.img 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            src="/public1/img/QSI_LOGO.png" 
+            src="/img/QSI_LOGO.png" 
             alt="QSI Logo" 
             className="h-20 w-auto mb-8 bg-white p-2 rounded-lg"
             referrerPolicy="no-referrer"
@@ -325,8 +325,8 @@ const JobCard: React.FC<{ job: Job; initialExpanded?: boolean }> = ({ job, initi
           <img src={job.image} alt={job.title} className="w-full h-full object-cover grayscale brightness-125 hover:grayscale-0 transition-all duration-500 group-hover:scale-110" referrerPolicy="no-referrer" />
           {job.cobrand && (
             <div className="absolute top-2 left-2 flex gap-2">
-               <img src="/public1/img/QSI_LOGO.png" alt="QSI" className="h-5 bg-white p-0.5 rounded shadow" referrerPolicy="no-referrer" />
-               <img src="/public1/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-5 bg-white p-0.5 rounded shadow" referrerPolicy="no-referrer" />
+               <img src="/img/QSI_LOGO.png" alt="QSI" className="h-5 bg-white p-0.5 rounded shadow" referrerPolicy="no-referrer" />
+               <img src="/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-5 bg-white p-0.5 rounded shadow" referrerPolicy="no-referrer" />
             </div>
           )}
         </div>
@@ -377,7 +377,7 @@ const JobOpenings = () => {
   const jobs = [
     {
       title: "Male Production Operator",
-      image: "/public1/img/MaleOperator.png",
+      image: "/img/MaleOperator.png",
       salary: "₱479",
       location: "Carmona, Cavite",
       email: "carmonaqsi@gmail.com",
@@ -386,7 +386,7 @@ const JobOpenings = () => {
     },
     {
       title: "Blending Operator",
-      image: "/public1/img/BlendingOperator.png",
+      image: "/img/BlendingOperator.png",
       salary: "₱479 + ₱50 allowance",
       location: "Carmona, Cavite",
       email: "carmonaqsi@gmail.com",
@@ -395,7 +395,7 @@ const JobOpenings = () => {
     },
     {
       title: "Laborer",
-      image: "/public1/img/Laborer.png",
+      image: "/img/Laborer.png",
       salary: "₱479",
       location: "Carmona, Cavite",
       email: "carmonaqsi@gmail.com",
@@ -404,7 +404,7 @@ const JobOpenings = () => {
     },
     {
       title: "Plant Mechanic",
-      image: "/public1/img/PlantMechanic.png",
+      image: "/img/PlantMechanic.png",
       salary: "Competitive",
       location: "Mandaluyong",
       email: "carmonaqsi@gmail.com",
@@ -413,7 +413,7 @@ const JobOpenings = () => {
     },
     {
       title: "Utility",
-      image: "/public1/img/Utility.png",
+      image: "/img/Utility.png",
       salary: "₱600 + fixed 2hrs OT",
       location: "Mandaluyong",
       email: "carmonaqsi@gmail.com",
@@ -500,7 +500,7 @@ const Clients = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl font-display font-bold text-qsi-dark mb-12">Our Deployment Partners</h2>
         <div className="max-w-3xl mx-auto bg-white p-12 rounded-[50px] shadow-xl border-t-8 border-partner-blue flex flex-col items-center">
-          <img src="/public1/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-24 mb-8" referrerPolicy="no-referrer" />
+          <img src="/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-24 mb-8" referrerPolicy="no-referrer" />
           <p className="text-gray-700 text-lg leading-relaxed mb-6">
             "QuestServ Solutions Inc. is proud to deploy workers to reputable industrial companies. Our flagship deployment partner is W Hydrocolloids, Inc., where our Plant Mechanics and Utility staff serve with excellence."
           </p>
@@ -649,7 +649,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
-            <img src="/public1/img/QSI_LOGO.png" alt="QSI Logo" className="h-16 mb-6" referrerPolicy="no-referrer" />
+            <img src="/img/QSI_LOGO.png" alt="QSI Logo" className="h-16 mb-6" referrerPolicy="no-referrer" />
             <p className="text-2xl font-display font-bold text-qsi-dark mb-2 italic">Be Part of Our Growing Team!</p>
             <p className="text-gray-600 max-w-sm">Providing expert manpower services to industrial leaders in the Philippines since 2022.</p>
           </div>
@@ -676,7 +676,7 @@ const Footer = () => {
           <div className="flex items-center gap-6">
             <div className="flex flex-col items-center">
               <span className="text-[10px] font-bold uppercase text-gray-400 mb-1">Deployment Partner</span>
-              <img src="/public1/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-10" referrerPolicy="no-referrer" />
+              <img src="/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-10" referrerPolicy="no-referrer" />
             </div>
           </div>
           <p className="text-gray-500 text-sm">© 2025 QuestServ Solutions Inc. All rights reserved.</p>
