@@ -24,7 +24,9 @@ import {
   Building2,
   Trophy,
   Clock,
-  Award
+  Award,
+  Heart,
+  Star
 } from "lucide-react";
 
 // --- Components ---
@@ -176,9 +178,10 @@ const Hero = () => {
             transition={{ delay: 0.6 }}
             className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full"
           >
-            <div className="flex items-center gap-3 text-white bg-white/10 p-4 rounded-xl backdrop-blur-sm">
-              <CheckCircle2 className="text-qsi-accent" size={32} />
-              <span className="font-bold">SEC Registered Business</span>
+            {/* SEC Registered Business - HIGHLIGHTED IN GOLD */}
+            <div className="flex items-center gap-3 text-white bg-gradient-to-r from-yellow-600/20 to-yellow-500/10 border border-yellow-500/30 p-4 rounded-xl backdrop-blur-sm shadow-lg shadow-yellow-500/10">
+              <CheckCircle2 className="text-yellow-400" size={32} />
+              <span className="font-bold text-yellow-300">SEC Registered Business</span>
             </div>
             <div className="flex items-center gap-3 text-white bg-white/10 p-4 rounded-xl backdrop-blur-sm">
               <MapPin className="text-qsi-accent" size={32} />
@@ -305,7 +308,7 @@ interface Job {
   cobrand: boolean;
 }
 
-// NEW MODERN JOB CARD COMPONENT
+// FLYER-STYLE JOB CARD - Displays the actual image with Apply button
 const JobCard: React.FC<{ job: Job }> = ({ job }) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -316,98 +319,65 @@ const JobCard: React.FC<{ job: Job }> = ({ job }) => {
       viewport={{ once: true }}
       whileHover={{ y: -5 }}
       transition={{ duration: 0.3 }}
-      className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group"
+      className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-200"
     >
-      {/* Header with Image and Overlay */}
-      <div className="relative h-44 overflow-hidden">
+      {/* Full Flyer Image */}
+      <div className="relative">
         <img 
           src={job.image} 
           alt={job.title} 
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full object-cover"
           referrerPolicy="no-referrer" 
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-        
-        {/* Salary Badge */}
-        <div className="absolute bottom-3 left-3 bg-qsi-accent text-qsi-dark px-3 py-1.5 rounded-lg font-bold text-sm shadow-lg">
-          ₱{job.salary}
-          <span className="text-[9px] font-normal block text-qsi-dark/80">/ daily rate</span>
-        </div>
-        
-        {/* Co-brand Badge */}
-        {job.cobrand && (
-          <div className="absolute top-3 right-3 flex gap-1 bg-black/60 backdrop-blur-sm rounded-lg px-2 py-1">
-            <img src="/img/QSI_LOGO.png" alt="QSI" className="h-5 w-auto rounded" referrerPolicy="no-referrer" />
-            <img src="/img/W_Hydrocloroidsinc.png" alt="WHI" className="h-5 w-auto rounded" referrerPolicy="no-referrer" />
-          </div>
-        )}
       </div>
 
-      {/* Content */}
-      <div className="p-5">
-        <h3 className="text-lg font-bold text-qsi-dark mb-2 line-clamp-2">{job.title}</h3>
-        
-        {/* Location */}
-        <div className="flex items-center gap-1.5 mb-3 text-gray-500 text-sm">
-          <MapPin size={14} className="text-qsi-accent" />
-          <span>{job.location}</span>
-        </div>
-
-        {/* Requirements Preview Chips */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {job.requirements.slice(0, 3).map((req, i) => (
-            <span key={i} className="text-[10px] bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-              {req.length > 20 ? req.substring(0, 18) + "..." : req}
-            </span>
-          ))}
-          {job.requirements.length > 3 && (
-            <span className="text-[10px] bg-qsi-accent/10 text-qsi-accent px-2 py-1 rounded-full font-semibold">
-              +{job.requirements.length - 3} more
-            </span>
-          )}
-        </div>
-
-        {/* View Requirements Toggle */}
-        <button 
-          onClick={() => setExpanded(!expanded)}
-          className="w-full flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-qsi-accent hover:text-qsi-dark transition-colors mb-4 py-2 border-t border-gray-100"
+      {/* Action Buttons Below Image */}
+      <div className="p-4 bg-white border-t border-gray-100 flex flex-col gap-3">
+        <a 
+          href={`mailto:${job.email}?subject=Application for ${job.title}&body=Hello QSI Team,%0D%0A%0D%0AI would like to apply for the ${job.title} position.%0D%0A%0D%0AName:%0D%0AContact Number:%0D%0A`}
+          className="w-full bg-qsi-dark text-white py-3 rounded-xl font-bold text-sm text-center hover:bg-qsi-accent hover:text-qsi-dark transition-all flex items-center justify-center gap-2"
         >
-          <span className="flex items-center gap-1">
-            <Award size={12} />
-            {expanded ? "Hide Requirements" : "View Requirements"}
-          </span>
-          {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          <Mail size={16} />
+          SUBMIT YOUR RESUME
+        </a>
+        
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="w-full text-qsi-accent text-xs font-semibold uppercase tracking-wider hover:text-qsi-dark transition-colors flex items-center justify-center gap-1"
+        >
+          {expanded ? "▼ VIEW LESS" : "▶ VIEW REQUIREMENTS"}
         </button>
 
-        {/* Expandable Requirements List */}
+        {/* Expandable Contact Details */}
         <AnimatePresence>
           {expanded && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="mb-4 bg-gray-50 rounded-xl p-3"
+              className="mt-2 pt-3 border-t border-gray-100"
             >
-              <ul className="space-y-1.5">
-                {job.requirements.map((req, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs text-gray-700">
-                    <div className="w-1.5 h-1.5 rounded-full bg-qsi-accent mt-1.5 flex-shrink-0" />
-                    <span>{req}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="text-xs text-gray-500 space-y-2">
+                <p className="flex items-center gap-2">
+                  <Mail size={12} className="text-qsi-accent" />
+                  <span>{job.email}</span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Facebook size={12} className="text-qsi-accent" />
+                  <span>Qsi Carmona</span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Phone size={12} className="text-qsi-accent" />
+                  <span>0950 844 2730</span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <ExternalLink size={12} className="text-qsi-accent" />
+                  <span>https://www.facebook.com/spai.carmona</span>
+                </p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Apply Button */}
-        <a 
-          href={`mailto:${job.email}?subject=Application for ${job.title}&body=Hello QSI Team,%0D%0A%0D%0AI would like to apply for the ${job.title} position.%0D%0A%0D%0AName:%0D%0AContact Number:%0D%0A`}
-          className="w-full bg-qsi-dark text-white py-2.5 rounded-xl font-bold text-sm text-center block hover:bg-qsi-accent hover:text-qsi-dark transition-all transform active:scale-95 flex items-center justify-center gap-2"
-        >
-          <Briefcase size={14} />
-          Apply Now
-        </a>
       </div>
     </motion.div>
   );
@@ -418,7 +388,7 @@ const JobOpenings = () => {
     {
       title: "Male Production Operator",
       image: "/img/MaleOperator.png",
-      salary: "479",
+      salary: "₱479",
       location: "Carmona, Cavite",
       email: "carmonaqsi@gmail.com",
       requirements: ["Jr/Sr HS grad", "With or without experience", "Shifting schedule", "18+ years old", "No visible tattoo"],
@@ -427,7 +397,7 @@ const JobOpenings = () => {
     {
       title: "Blending Operator",
       image: "/img/BlendingOperator.png",
-      salary: "479 + ₱50 allowance",
+      salary: "₱479 + ₱50 allowance",
       location: "Carmona, Cavite",
       email: "carmonaqsi@gmail.com",
       requirements: ["Male only", "Jr/Sr HS grad", "With or without experience", "Shifting schedule", "18+ years old", "No visible tattoo"],
@@ -436,7 +406,7 @@ const JobOpenings = () => {
     {
       title: "Laborer",
       image: "/img/Laborer.png",
-      salary: "479",
+      salary: "₱479",
       location: "Carmona, Cavite",
       email: "carmonaqsi@gmail.com",
       requirements: ["Jr/Sr HS grad", "Knowledgeable in Masonry & Carpentry", "Shifting schedule", "18+ years old", "No visible tattoo"],
@@ -454,7 +424,7 @@ const JobOpenings = () => {
     {
       title: "Utility",
       image: "/img/Utility.png",
-      salary: "600 + fixed 2hrs OT",
+      salary: "₱600 + fixed 2hrs OT",
       location: "Mandaluyong",
       email: "carmonaqsi@gmail.com",
       requirements: ["Male only, 18+", "Jr/Sr HS grad", "No visible tattoo", "6 mos - 1yr janitorial exp", "Deployment: W Hydrocolloids Inc."],
@@ -463,7 +433,7 @@ const JobOpenings = () => {
   ];
 
   return (
-    <section id="jobs" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section id="jobs" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -475,8 +445,8 @@ const JobOpenings = () => {
           <div className="w-24 h-1 bg-qsi-accent mx-auto mt-6 rounded-full" />
         </div>
         
-        {/* Job Cards Grid - 3 columns on desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Job Cards Grid - 5 columns for desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {jobs.map((job, idx) => (
             <JobCard key={idx} job={job} />
           ))}
@@ -510,12 +480,14 @@ const JobOpenings = () => {
 };
 
 const Benefits = () => {
+  // Updated with 6 benefits including Friendly & Supportive Staff
   const benefits = [
     { icon: <CheckCircle2 size={32} />, title: "Competitive Daily Rates", desc: "Earn ₱479–₱600/day depending on role, plus overtime pay." },
     { icon: <ShieldCheck size={32} />, title: "HMO & Health Card", desc: "Health coverage for all qualified deployed employees." },
     { icon: <Briefcase size={32} />, title: "PPE Provided", desc: "Personal Protective Equipment supplied for all industrial roles." },
     { icon: <Users size={32} />, title: "Christmas Packages", desc: "Seasonal bonuses and holiday packages for long-term workers." },
     { icon: <ArrowRight size={32} />, title: "Assisted Pre-Employment", desc: "We guide you through all documentary requirements." },
+    { icon: <Heart size={32} />, title: "Friendly & Supportive Staff", desc: "Work in a positive environment with approachable and helpful team members who care about your success." }
   ];
 
   return (
@@ -531,10 +503,13 @@ const Benefits = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="benefit-pill p-6 rounded-lg text-qsi-dark flex flex-col gap-2"
+              className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl hover:bg-white/20 transition-all border border-white/5 hover:border-qsi-accent/50 group"
             >
-              <h4 className="text-sm font-display font-extrabold uppercase tracking-tight text-qsi-dark">{benefit.title}</h4>
-              <p className="text-xs text-gray-600 leading-relaxed">{benefit.desc}</p>
+              <div className="text-qsi-accent mb-4 group-hover:scale-110 transition-transform">
+                {benefit.icon}
+              </div>
+              <h4 className="text-lg font-display font-extrabold uppercase tracking-tight text-white mb-2">{benefit.title}</h4>
+              <p className="text-sm text-gray-300 leading-relaxed">{benefit.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -579,7 +554,7 @@ const ApplySteps = () => {
           <div className="hidden md:block absolute top-12 left-0 w-full h-1 bg-qsi-light z-0" />
           {steps.map((step, idx) => (
             <div key={idx} className="flex flex-col items-center text-center relative z-10 px-4">
-              <div className="w-16 h-16 bg-qsi-dark text-white text-3xl font-bold flex items-center justify-center rounded-full border-4 border-white mb-6 shadow-xl">
+              <div className="w-16 h-16 bg-gradient-to-br from-qsi-dark to-qsi-medium text-white text-3xl font-bold flex items-center justify-center rounded-full border-4 border-white mb-6 shadow-xl">
                 {step.num}
               </div>
               <h4 className="text-xl font-bold text-qsi-dark mb-2">{step.title}</h4>
@@ -675,12 +650,12 @@ const Contact = () => {
                 </div>
               </div>
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-wider">Message</label>
-                <textarea rows={3} className="w-full p-4 bg-qsi-light rounded-2xl border-none focus:ring-2 focus:ring-qsi-medium"></textarea>
+                <label className="text-xs font-bold uppercase tracking-wider">Message / Attach Resume Link</label>
+                <textarea rows={3} className="w-full p-4 bg-qsi-light rounded-2xl border-none focus:ring-2 focus:ring-qsi-medium" placeholder="Drop your Google Drive link or message us..."></textarea>
               </div>
               <button 
                 type="submit" 
-                className="w-full bg-qsi-dark text-white py-4 rounded-full font-bold text-lg hover:bg-qsi-medium transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                className="w-full bg-qsi-dark text-white py-4 rounded-full font-bold text-lg hover:bg-qsi-accent hover:text-qsi-dark transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
               >
                 Submit Application
               </button>
@@ -708,48 +683,4 @@ const Footer = () => {
               <li><a href="#home" className="text-gray-600 hover:text-qsi-dark transition-colors">Home</a></li>
               <li><a href="#about" className="text-gray-600 hover:text-qsi-dark transition-colors">About Us</a></li>
               <li><a href="#services" className="text-gray-600 hover:text-qsi-dark transition-colors">Services</a></li>
-              <li><a href="#jobs" className="text-gray-600 hover:text-qsi-dark transition-colors">Job Openings</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-display font-bold text-qsi-dark mb-6">Get in Touch</h4>
-            <ul className="space-y-4">
-              <li className="flex items-center gap-2 text-gray-600"><Phone size={16} className="text-qsi-medium" /> 0917 627 3371</li>
-              <li className="flex items-center gap-2 text-gray-600"><Mail size={16} className="text-qsi-medium" /> questserv2022@gmail.com</li>
-              <li className="flex items-center gap-2 text-gray-600 hover:text-blue-600"><Facebook size={16} className="text-qsi-medium" /> Qsi Carmona</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-gray-100 gap-6">
-          <div className="flex items-center gap-6">
-            <div className="flex flex-col items-center">
-              <span className="text-[10px] font-bold uppercase text-gray-400 mb-1">Deployment Partner</span>
-              <img src="/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-10" referrerPolicy="no-referrer" />
-            </div>
-          </div>
-          <p className="text-gray-500 text-sm">© 2025 QuestServ Solutions Inc. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-// --- Main App ---
-
-export default function App() {
-  return (
-    <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-qsi-accent selection:text-qsi-dark">
-      <Navbar />
-      <Hero />
-      <About />
-      <Services />
-      <JobOpenings />
-      <Benefits />
-      <Clients />
-      <ApplySteps />
-      <Contact />
-      <Footer />
-    </div>
-  );
-}
+              <li><a href="#jobs" className="text-gray-600
