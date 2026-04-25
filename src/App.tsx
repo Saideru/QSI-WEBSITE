@@ -682,7 +682,7 @@ const Footer = () => {
           <p className="text-gray-500 text-sm">© 2025 QuestServ Solutions Inc. All rights reserved.</p>
         </div>
       </div>
-    </section>
+    </footer>
   );
 };
 
