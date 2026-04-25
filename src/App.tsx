@@ -53,7 +53,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 flex items-center">
-            <img src="/img/QSI_LOGO.png" alt="QSI Logo" className="h-18 w-auto" referrerPolicy="no-referrer" />
+            <img src="/img/QSI_LOGO.png" alt="QSI Logo" className="h-16 w-auto" referrerPolicy="no-referrer" />
           </div>
           
           <div className="hidden md:block">
@@ -128,14 +128,6 @@ const Hero = () => {
       <div className="diagonal-accent-solid opacity-30" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center md:text-left flex flex-col items-center md:items-start">
-          <motion.img 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            src="/img/QSI_LOGO.png" 
-            alt="QSI Logo" 
-            className="h-20 w-auto mb-8 bg-white p-2 rounded-lg"
-            referrerPolicy="no-referrer"
-          />
           <motion.h1 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
