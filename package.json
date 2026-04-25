@@ -9,7 +9,6 @@
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
-    "build": "npm run build -- --no-warnings"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",
