@@ -683,4 +683,48 @@ const Footer = () => {
               <li><a href="#home" className="text-gray-600 hover:text-qsi-dark transition-colors">Home</a></li>
               <li><a href="#about" className="text-gray-600 hover:text-qsi-dark transition-colors">About Us</a></li>
               <li><a href="#services" className="text-gray-600 hover:text-qsi-dark transition-colors">Services</a></li>
-              <li><a href="#jobs" className="text-gray-600
+              <li><a href="#jobs" className="text-gray-600 hover:text-qsi-dark transition-colors">Job Openings</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-display font-bold text-qsi-dark mb-6">Get in Touch</h4>
+            <ul className="space-y-4">
+              <li className="flex items-center gap-2 text-gray-600"><Phone size={16} className="text-qsi-medium" /> 0917 627 3371</li>
+              <li className="flex items-center gap-2 text-gray-600"><Mail size={16} className="text-qsi-medium" /> questserv2022@gmail.com</li>
+              <li className="flex items-center gap-2 text-gray-600 hover:text-blue-600"><Facebook size={16} className="text-qsi-medium" /> Qsi Carmona</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-gray-100 gap-6">
+          <div className="flex items-center gap-6">
+            <div className="flex flex-col items-center">
+              <span className="text-[10px] font-bold uppercase text-gray-400 mb-1">Deployment Partner</span>
+              <img src="/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-10" referrerPolicy="no-referrer" />
+            </div>
+          </div>
+          <p className="text-gray-500 text-sm">© 2025 QuestServ Solutions Inc. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+// --- Main App ---
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-qsi-accent selection:text-qsi-dark">
+      <Navbar />
+      <Hero />
+      <About />
+      <Services />
+      <JobOpenings />
+      <Benefits />
+      <Clients />
+      <ApplySteps />
+      <Contact />
+      <Footer />
+    </div>
+  );
+}
