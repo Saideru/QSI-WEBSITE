@@ -22,7 +22,9 @@ import {
   ChevronDown,
   ChevronUp,
   Building2,
-  Trophy
+  Trophy,
+  Clock,
+  Award
 } from "lucide-react";
 
 // --- Components ---
@@ -303,63 +305,109 @@ interface Job {
   cobrand: boolean;
 }
 
-const JobCard: React.FC<{ job: Job; initialExpanded?: boolean }> = ({ job, initialExpanded = false }) => {
-  const [expanded, setExpanded] = useState(initialExpanded);
+// NEW MODERN JOB CARD COMPONENT
+const JobCard: React.FC<{ job: Job }> = ({ job }) => {
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <motion.div 
-      layout
-      className="bg-qsi-dark text-white rounded-xl overflow-hidden shadow-xl border-l-[6px] border-qsi-accent relative group"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -5 }}
+      transition={{ duration: 0.3 }}
+      className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group"
     >
-      <div className="job-card-accent" />
-      <div className="p-1 relative z-10 flex flex-col h-full">
-        <div className="h-40 overflow-hidden relative border-b border-white/10">
-          <img src={job.image} alt={job.title} className="w-full h-full object-cover grayscale brightness-125 hover:grayscale-0 transition-all duration-500 group-hover:scale-110" referrerPolicy="no-referrer" />
-          {job.cobrand && (
-            <div className="absolute top-2 left-2 flex gap-2">
-               <img src="/img/QSI_LOGO.png" alt="QSI" className="h-5 bg-white p-0.5 rounded shadow" referrerPolicy="no-referrer" />
-               <img src="/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-5 bg-white p-0.5 rounded shadow" referrerPolicy="no-referrer" />
-            </div>
+      {/* Header with Image and Overlay */}
+      <div className="relative h-44 overflow-hidden">
+        <img 
+          src={job.image} 
+          alt={job.title} 
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          referrerPolicy="no-referrer" 
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        
+        {/* Salary Badge */}
+        <div className="absolute bottom-3 left-3 bg-qsi-accent text-qsi-dark px-3 py-1.5 rounded-lg font-bold text-sm shadow-lg">
+          ₱{job.salary}
+          <span className="text-[9px] font-normal block text-qsi-dark/80">/ daily rate</span>
+        </div>
+        
+        {/* Co-brand Badge */}
+        {job.cobrand && (
+          <div className="absolute top-3 right-3 flex gap-1 bg-black/60 backdrop-blur-sm rounded-lg px-2 py-1">
+            <img src="/img/QSI_LOGO.png" alt="QSI" className="h-5 w-auto rounded" referrerPolicy="no-referrer" />
+            <img src="/img/W_Hydrocloroidsinc.png" alt="WHI" className="h-5 w-auto rounded" referrerPolicy="no-referrer" />
+          </div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="p-5">
+        <h3 className="text-lg font-bold text-qsi-dark mb-2 line-clamp-2">{job.title}</h3>
+        
+        {/* Location */}
+        <div className="flex items-center gap-1.5 mb-3 text-gray-500 text-sm">
+          <MapPin size={14} className="text-qsi-accent" />
+          <span>{job.location}</span>
+        </div>
+
+        {/* Requirements Preview Chips */}
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {job.requirements.slice(0, 3).map((req, i) => (
+            <span key={i} className="text-[10px] bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+              {req.length > 20 ? req.substring(0, 18) + "..." : req}
+            </span>
+          ))}
+          {job.requirements.length > 3 && (
+            <span className="text-[10px] bg-qsi-accent/10 text-qsi-accent px-2 py-1 rounded-full font-semibold">
+              +{job.requirements.length - 3} more
+            </span>
           )}
         </div>
-        <div className="p-5 flex-grow">
-          <h3 className="text-lg font-display font-bold uppercase tracking-wide mb-2 text-white">{job.title}</h3>
-          <div className="flex items-center gap-2 mb-4 text-[10px] font-bold uppercase tracking-widest opacity-70">
-            <MapPin size={12} className="text-qsi-accent" />
-            {job.location}
-          </div>
-          
-          <div className="mb-4">
-            <span className="text-xl font-display font-extrabold text-qsi-accent">{job.salary}</span>
-            <span className="text-[10px] uppercase font-bold tracking-tighter opacity-60 block">daily rate + benefits</span>
-          </div>
 
-          <button 
-            onClick={() => setExpanded(!expanded)}
-            className="md:hidden flex items-center justify-between w-full p-2 bg-white/5 rounded-lg mb-4 text-[10px] uppercase font-bold tracking-widest"
-          >
-            Requirements {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-          </button>
+        {/* View Requirements Toggle */}
+        <button 
+          onClick={() => setExpanded(!expanded)}
+          className="w-full flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-qsi-accent hover:text-qsi-dark transition-colors mb-4 py-2 border-t border-gray-100"
+        >
+          <span className="flex items-center gap-1">
+            <Award size={12} />
+            {expanded ? "Hide Requirements" : "View Requirements"}
+          </span>
+          {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+        </button>
 
-          <div className={`${expanded ? "block" : "hidden"} md:block mb-6`}>
-            <ul className="text-[11px] space-y-1.5 opacity-80">
-              {job.requirements.map((req, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-qsi-accent mt-1 flex-shrink-0" />
-                  <span>{req}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="p-5 pt-0 mt-auto">
-          <a 
-            href={`mailto:${job.email}`}
-            className="w-full bg-white text-qsi-dark py-2.5 rounded shadow-sm font-display font-bold uppercase text-[10px] tracking-[0.2em] text-center block hover:bg-qsi-accent hover:text-qsi-dark transition-all transform active:scale-95"
-          >
-            Details & Apply
-          </a>
-        </div>
+        {/* Expandable Requirements List */}
+        <AnimatePresence>
+          {expanded && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mb-4 bg-gray-50 rounded-xl p-3"
+            >
+              <ul className="space-y-1.5">
+                {job.requirements.map((req, i) => (
+                  <li key={i} className="flex items-start gap-2 text-xs text-gray-700">
+                    <div className="w-1.5 h-1.5 rounded-full bg-qsi-accent mt-1.5 flex-shrink-0" />
+                    <span>{req}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Apply Button */}
+        <a 
+          href={`mailto:${job.email}?subject=Application for ${job.title}&body=Hello QSI Team,%0D%0A%0D%0AI would like to apply for the ${job.title} position.%0D%0A%0D%0AName:%0D%0AContact Number:%0D%0A`}
+          className="w-full bg-qsi-dark text-white py-2.5 rounded-xl font-bold text-sm text-center block hover:bg-qsi-accent hover:text-qsi-dark transition-all transform active:scale-95 flex items-center justify-center gap-2"
+        >
+          <Briefcase size={14} />
+          Apply Now
+        </a>
       </div>
     </motion.div>
   );
@@ -370,7 +418,7 @@ const JobOpenings = () => {
     {
       title: "Male Production Operator",
       image: "/img/MaleOperator.png",
-      salary: "₱479",
+      salary: "479",
       location: "Carmona, Cavite",
       email: "carmonaqsi@gmail.com",
       requirements: ["Jr/Sr HS grad", "With or without experience", "Shifting schedule", "18+ years old", "No visible tattoo"],
@@ -379,7 +427,7 @@ const JobOpenings = () => {
     {
       title: "Blending Operator",
       image: "/img/BlendingOperator.png",
-      salary: "₱479 + ₱50 allowance",
+      salary: "479 + ₱50 allowance",
       location: "Carmona, Cavite",
       email: "carmonaqsi@gmail.com",
       requirements: ["Male only", "Jr/Sr HS grad", "With or without experience", "Shifting schedule", "18+ years old", "No visible tattoo"],
@@ -388,7 +436,7 @@ const JobOpenings = () => {
     {
       title: "Laborer",
       image: "/img/Laborer.png",
-      salary: "₱479",
+      salary: "479",
       location: "Carmona, Cavite",
       email: "carmonaqsi@gmail.com",
       requirements: ["Jr/Sr HS grad", "Knowledgeable in Masonry & Carpentry", "Shifting schedule", "18+ years old", "No visible tattoo"],
@@ -406,7 +454,7 @@ const JobOpenings = () => {
     {
       title: "Utility",
       image: "/img/Utility.png",
-      salary: "₱600 + fixed 2hrs OT",
+      salary: "600 + fixed 2hrs OT",
       location: "Mandaluyong",
       email: "carmonaqsi@gmail.com",
       requirements: ["Male only, 18+", "Jr/Sr HS grad", "No visible tattoo", "6 mos - 1yr janitorial exp", "Deployment: W Hydrocolloids Inc."],
@@ -415,37 +463,46 @@ const JobOpenings = () => {
   ];
 
   return (
-    <section id="jobs" className="py-20 bg-white relative">
-      <div className="diagonal-accent-solid opacity-10" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-display font-bold text-qsi-dark mb-4">We Are Hiring! 💼</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">Browse our current open positions and submit your resume today. Start your journey with QSI.</p>
+    <section id="jobs" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <div className="inline-block px-4 py-1 bg-qsi-accent/10 rounded-full mb-4">
+            <span className="text-qsi-accent font-bold text-sm uppercase tracking-wider">Join Our Team</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-qsi-dark mb-4">We Are Hiring! 💼</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg">Browse our current open positions and submit your resume today. Start your journey with QSI.</p>
+          <div className="w-24 h-1 bg-qsi-accent mx-auto mt-6 rounded-full" />
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        {/* Job Cards Grid - 3 columns on desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {jobs.map((job, idx) => (
             <JobCard key={idx} job={job} />
           ))}
         </div>
 
+        {/* CTA Banner */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 bg-qsi-medium p-8 rounded-3xl text-white flex flex-col md:flex-row justify-between items-center gap-6 shadow-2xl relative overflow-hidden"
+          className="mt-16 bg-gradient-to-r from-qsi-dark to-qsi-medium rounded-2xl text-white flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl overflow-hidden relative"
         >
-          <div className="z-10">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full -ml-24 -mb-24" />
+          <div className="z-10 p-8 md:p-10">
             <h3 className="text-2xl font-bold mb-2">Don't see your role listed?</h3>
             <p className="opacity-90">Send your resume anyway — we're always growing and may have a spot for you!</p>
           </div>
-          <a 
-            href="mailto:questserv2022@gmail.com" 
-            className="z-10 bg-white text-qsi-dark px-10 py-4 rounded-full font-bold flex items-center gap-2 hover:bg-qsi-bg transition-all shadow-lg"
-          >
-            Send Resume 📧
-          </a>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16" />
+          <div className="z-10 px-8 pb-8 md:py-8">
+            <a 
+              href="mailto:questserv2022@gmail.com" 
+              className="bg-white text-qsi-dark px-8 py-3 rounded-full font-bold flex items-center gap-2 hover:bg-qsi-accent hover:text-white transition-all shadow-lg transform hover:scale-105"
+            >
+              Send Resume 📧
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>
