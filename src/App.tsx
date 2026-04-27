@@ -703,7 +703,7 @@ const Footer = () => {
               <img src="/img/w_group.png" alt="W Hydrocolloids" className="h-10" referrerPolicy="no-referrer" />
             </div>
           </div>
-          <p className="text-gray-500 text-sm">© 2025 QuestServ Solutions Inc. All rights reserved.</p>
+          <p className="text-gray-500 text-sm">© 2026 QuestServ Solutions Inc. All rights reserved.</p>
         </div>
       </div>
     </footer>
