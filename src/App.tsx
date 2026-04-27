@@ -526,7 +526,7 @@ const Clients = () => {
         <div className="max-w-3xl mx-auto bg-white p-12 rounded-[50px] shadow-xl border-t-8 border-partner-blue flex flex-col items-center">
           <img src="/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-24 mb-8" referrerPolicy="no-referrer" />
           <p className="text-gray-700 text-lg leading-relaxed mb-6">
-            "QuestServ Solutions Inc. is proud to deploy workers to reputable industrial companies. Our flagship deployment partner is W Hydrocolloids, Inc., where our Plant Mechanics and Utility staff serve with excellence."
+            “QuestServ Solutions Inc. is proud to provide skilled workforce solutions to trusted companies under the W Group network, supporting operational excellence across various industries.”          
           </p>
           <div className="w-16 h-1 bg-partner-blue rounded-full" />
         </div>
