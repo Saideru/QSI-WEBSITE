@@ -524,7 +524,7 @@ const Clients = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl font-display font-bold text-qsi-dark mb-12">Our Deployment Partners</h2>
         <div className="max-w-3xl mx-auto bg-white p-12 rounded-[50px] shadow-xl border-t-8 border-partner-blue flex flex-col items-center">
-          <img src="/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-24 mb-8" referrerPolicy="no-referrer" />
+          <img src="/img/w_group.png" alt="W Hydrocolloids" className="h-24 mb-8" referrerPolicy="no-referrer" />
           <p className="text-gray-700 text-lg leading-relaxed mb-6">
             “QuestServ Solutions Inc. is proud to provide skilled workforce solutions to trusted companies under the W Group network, supporting operational excellence across various industries.”          
           </p>
@@ -700,7 +700,7 @@ const Footer = () => {
           <div className="flex items-center gap-6">
             <div className="flex flex-col items-center">
               <span className="text-[10px] font-bold uppercase text-gray-400 mb-1">Deployment Partner</span>
-              <img src="/img/W_Hydrocloroidsinc.png" alt="W Hydrocolloids" className="h-10" referrerPolicy="no-referrer" />
+              <img src="/img/w_group.png" alt="W Hydrocolloids" className="h-10" referrerPolicy="no-referrer" />
             </div>
           </div>
           <p className="text-gray-500 text-sm">© 2025 QuestServ Solutions Inc. All rights reserved.</p>
